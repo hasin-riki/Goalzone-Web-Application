@@ -14,23 +14,21 @@ spec:
     spec:
       containers:
       - name: backend
-        image: hasinzmn/goalzone-backend:latest
-        imagePullPolicy: Always 
+        image: goalzone-backend
+        imagePullPolicy: Never  # Ensures local image usage
         ports:
         - containerPort: 3000
         env:
-        - name: mongoURL
-          value: "mongodb://mongo-service:27017/ThriftStore"
-        - name: cloudName
-          value: "drljnpqvs"
-        - name: apiKey
-          value: "859558226146574"
-        - name: apiSecret
-          value: "yv-lTwWSXglpJLaL5T-xXPoX20g"
+        - name: MONGO_LINK
+          value: "mongodb+srv://admin:admin123@cluster1.es4rtw5.mongodb.net/Ground-Booking?retryWrites=true&w=majority"
+        - name: SECRET_REFRESH_TOKEN
+          value: "221ded233bf8201e8040ed7956fd9d85fef173305ed19223a49807bf4841fedf1a42f6c558723620a3a54ed5473058e3a166b78a283cdda5e43f5e18102835b8"
         - name: PORT
-          value: "5000"
-        - name: ACCESS_TOKEN_SECRET
-          value: "65e90112415d851e5b5f62caf877cf4013112c60e226449b115c28496d14a67a9b78473f3b2e54fc83ab0c5aafeecf5d7863c99ef9b7732d0d8ff1c75ed2a875"
+          value: "3000"
+        - name: SECRET_ACCESS_TOKEN
+          value: "7356dfc5775c766329ae9752f11e9c7502dd27ca76dfcd2aed2d38a0c42c38cca1c18bb83427b1cfbac32d11262e1b02a41b966c1c65dd426c50a241cf6b44ae"
+        - name: ORIGIN
+          value: "http://localhost:5173"
 
 ---
 
@@ -39,7 +37,6 @@ kind: Service
 metadata:
   name: backend
 spec:
-  type: LoadBalancer
   selector:
     app: backend
   ports:
