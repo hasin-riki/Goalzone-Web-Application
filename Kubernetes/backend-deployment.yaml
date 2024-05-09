@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: hasinzmn/goalzone-backend:latest
+        imagePullPolicy: Always 
+        ports:
+        - containerPort: 3000
+        env:
+        - name: mongoURL
+          value: "mongodb://mongo-service:27017/ThriftStore"
+        - name: cloudName
+          value: "drljnpqvs"
+        - name: apiKey
+          value: "859558226146574"
+        - name: apiSecret
+          value: "yv-lTwWSXglpJLaL5T-xXPoX20g"
+        - name: PORT
+          value: "5000"
+        - name: ACCESS_TOKEN_SECRET
+          value: "65e90112415d851e5b5f62caf877cf4013112c60e226449b115c28496d14a67a9b78473f3b2e54fc83ab0c5aafeecf5d7863c99ef9b7732d0d8ff1c75ed2a875"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  type: LoadBalancer
+  selector:
+    app: backend
+  ports:
+  - protocol: TCP
+    port: 3000
+    targetPort: 3000

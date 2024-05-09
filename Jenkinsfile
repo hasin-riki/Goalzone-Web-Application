@@ -14,8 +14,8 @@ pipeline {
         stage('Build Docker images') {
             steps {
                 script {
-                    sh 'docker build . -t hasinzmn/goalzone-backend ./Backend'
-                    sh 'docker build . -t hasinzmn/goalzone-frontend ./Frontend'
+                    bat 'docker build -t hasinzmn/goalzone-backend ./Backend'
+                    bat 'docker build -t hasinzmn/goalzone-frontend ./Frontend'
                 }
             }
         }   
