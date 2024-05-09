@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: goalzone-backend
+        image: hasinzmn/goalzone-backend
         imagePullPolicy: Never  # Ensures local image usage
         ports:
         - containerPort: 3000
