@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        registryCredential = credentials('docker-hub-access-token')   
+        registryCredential = credentials('docker-hub-pwd')   
     }
     agent any
 
@@ -16,7 +16,7 @@ pipeline {
         stage('Push images to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('', 'docker-hub-pwd') {
+                    docker.withRegistry('https://index.docker.io/v1/', registryCredential) {
                         bat 'docker push hasinzmn/goalzone-backend'
                         bat 'docker push hasinzmn/goalzone-frontend'
                     }
