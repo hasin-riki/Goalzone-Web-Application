@@ -1,6 +1,5 @@
 pipeline {
     environment {
-        dockerHubPassword = credentials('docker-hub-password') 
         registryCredential = credentials('docker-hub-access-token')   
     }
     agent any
@@ -17,13 +16,15 @@ pipeline {
         stage('Push images to Docker Hub') {
             steps {
                 script {
-                    bat 'docker login -u hasinzmn -p ${docker-hub-password}'
+                    withCredentials([string(credentialsId: 'docker-hub-pwd', variable: 'docker-hub-pwd')]) {
+                        bat 'docker login -u hasinzmn -p ${docker-hub-pwd}'
+                    }
                     bat 'docker push hasinzmn/goalzone-backend'
                     bat 'docker push hasinzmn/goalzone-frontend'
                 }
             }
         }   
-        stage('deploy on minikube'){
+        stage('Deploy on minikube'){
             steps {                
                 bat 'kubectl apply -f ./Kubernetes/backend-deployment.yaml'
                 bat 'kubectl apply -f ./Kubernetes/frontend-deployment.yaml'
