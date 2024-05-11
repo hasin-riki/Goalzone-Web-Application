@@ -1,3 +1,6 @@
+#Kubernetes
+backend-secrets.yaml
+
 # Logs
 logs
 *.log

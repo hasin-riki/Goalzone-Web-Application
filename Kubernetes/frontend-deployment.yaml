@@ -15,7 +15,6 @@ spec:
       containers:
       - name: frontend
         image: hasinzmn/goalzone-frontend
-        imagePullPolicy: Never  # Ensures local image usage
         ports:
         - containerPort: 5173
 

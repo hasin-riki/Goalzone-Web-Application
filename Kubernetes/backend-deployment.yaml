@@ -15,20 +15,14 @@ spec:
       containers:
       - name: backend
         image: hasinzmn/goalzone-backend
-        imagePullPolicy: Never  # Ensures local image usage
         ports:
         - containerPort: 3000
-        env:
-        - name: MONGO_LINK
-          value: "mongodb+srv://admin:admin123@cluster1.es4rtw5.mongodb.net/Ground-Booking?retryWrites=true&w=majority"
-        - name: SECRET_REFRESH_TOKEN
-          value: "221ded233bf8201e8040ed7956fd9d85fef173305ed19223a49807bf4841fedf1a42f6c558723620a3a54ed5473058e3a166b78a283cdda5e43f5e18102835b8"
-        - name: PORT
-          value: "3000"
-        - name: SECRET_ACCESS_TOKEN
-          value: "7356dfc5775c766329ae9752f11e9c7502dd27ca76dfcd2aed2d38a0c42c38cca1c18bb83427b1cfbac32d11262e1b02a41b966c1c65dd426c50a241cf6b44ae"
-        - name: ORIGIN
-          value: "http://localhost:5173"
+        envFrom:
+        - secretRef:
+            name: backend-secrets
+        envFrom:
+        - secretRef:
+            name: backend-secrets
 
 ---
 
