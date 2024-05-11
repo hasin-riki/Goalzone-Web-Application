@@ -17,7 +17,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'docker-hub-pwd', variable: 'docker-hub-pwd')]) {
-                        bat 'docker login -u hasinzmn -p ${docker-hub-pwd}'
+                        bat "echo ${docker-hub-pwd} | docker login -u hasinzmn --password-stdin"
+                        // bat 'docker login -u hasinzmn -p ${docker-hub-pwd}'
                     }
                     bat 'docker push hasinzmn/goalzone-backend'
                     bat 'docker push hasinzmn/goalzone-frontend'
