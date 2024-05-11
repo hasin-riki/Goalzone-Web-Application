@@ -1,9 +1,6 @@
 pipeline {
     environment {
-        dockerimagebe = 'hasinzmn/goalzone-backend-image'
-        dockerImageBackend = ""
-        dockerimagefe = 'hasinzmn/goalzone-backend-image'
-        dockerImageFrontend = ""
+        dockerHubPassword = credentials('docker-hub-password') 
         registryCredential = credentials('docker-hub-access-token')   
     }
     agent any
@@ -20,9 +17,7 @@ pipeline {
         stage('Push images to Docker Hub') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                        bat 'docker login -u hasinzmn -p ${dockerhubpwd}'
-                    }
+                    bat 'docker login -u hasinzmn -p ${docker-hub-password}'
                     bat 'docker push hasinzmn/goalzone-backend'
                     bat 'docker push hasinzmn/goalzone-frontend'
                 }
