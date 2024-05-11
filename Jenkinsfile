@@ -16,6 +16,17 @@ pipeline {
                     bat 'docker build -t hasinzmn/goalzone-frontend ./Frontend'
                 }
             }
+        }
+        stage('Push images to Docker Hub') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
+                        bat 'docker login -u hasinzmn -p ${dockerhubpwd}'
+                    }
+                    bat 'docker push hasinzmn/goalzone-backend'
+                    bat 'docker push hasinzmn/goalzone-frontend'
+                }
+            }
         }   
         stage('deploy on minikube'){
             steps {                
